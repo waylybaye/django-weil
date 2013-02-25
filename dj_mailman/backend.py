@@ -1,6 +1,7 @@
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 import requests
+from dj_mailman.models import Mail, MailStatus
 
 
 class EmailBackend(BaseEmailBackend):
@@ -11,6 +12,13 @@ class EmailBackend(BaseEmailBackend):
 
     def send_messages(self, email_messages):
         for email_message in email_messages:
+
+            # save to database
+            mail = Mail()
+            mail.email = email_message
+            mail.status = MailStatus.NORMAL
+            mail.save()
+
             data = {
                 'subject': email_message.subject,
                 'to': email_message.to,
@@ -18,8 +26,13 @@ class EmailBackend(BaseEmailBackend):
                 'sender': email_message.from_email,
                 'token': self.token,
             }
+
             resp = requests.post(self.end_point, data)
-            print "REQUEST:"
-            print data
-            print "RESPONSE:"
-            print resp.status_code, resp.content
+
+            if resp.status_code == 200:
+                mail.status = MailStatus.SUCCESS
+            else:
+                mail.status = MailStatus.FAILED
+
+            mail.response = "STATUS: %s\nBODY: %s" % (resp.status_code, resp.content)
+            mail.save()
