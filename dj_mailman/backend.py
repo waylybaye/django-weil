@@ -14,8 +14,9 @@ class EmailBackend(BaseEmailBackend):
             data = {
                 'subject': email_message.subject,
                 'to': email_message.to,
-                'content': email_message.content,
+                'content': email_message.body,
                 'sender': email_message.from_email,
+                'token': self.token,
             }
             resp = requests.post(self.end_point, data)
             print "REQUEST:"
