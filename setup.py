@@ -3,15 +3,15 @@ try:
 except ImportError:
     from distutils.core import setup
 
-version = __import__('dj_mailman').__version__
+version = __import__('dj_weil').__version__
 
 setup(
-    name="django-mailman",
-    packages=['dj_mailman'],
+    name="django-weil",
+    packages=['dj_weil'],
     version=version,
     author="Baye Wayly",
-    author_email="havelove@gmail.com",
-    url="https://github.com/waylybaye/django-mailman",
+    author_email="baye@wayly.net",
+    url="https://github.com/waylybaye/django-weil",
     install_requires=["Django>=1.2", "requests"],
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',

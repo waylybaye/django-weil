@@ -1,7 +1,7 @@
 from django.conf import settings
 from django.core.mail.backends.base import BaseEmailBackend
 import requests
-from dj_mailman.models import Mail, MailStatus
+from dj_weil.models import Mail, MailStatus
 
 
 class EmailBackend(BaseEmailBackend):

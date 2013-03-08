@@ -1,5 +1,5 @@
 from django.contrib import admin
-from dj_mailman.models import Mail
+from dj_weil.models import Mail
 
 
 class MailAdmin(admin.ModelAdmin):
